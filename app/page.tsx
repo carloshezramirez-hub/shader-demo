@@ -1,11 +1,21 @@
-import DemoOne from "@/components/demo"
+import { Navbar } from "@/components/layout/navbar"
+import { Footer } from "@/components/layout/footer"
+import { Hero } from "@/components/sections/hero"
+import { Services } from "@/components/sections/services"
+import { Projects } from "@/components/sections/projects"
+import { Contact } from "@/components/sections/contact"
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-black p-8">
-      <div className="w-full max-w-5xl">
-        <DemoOne />
-      </div>
-    </main>
+    <>
+      <Navbar />
+      <main>
+        <Hero />
+        <Services />
+        <Projects />
+        <Contact />
+      </main>
+      <Footer />
+    </>
   )
 }
