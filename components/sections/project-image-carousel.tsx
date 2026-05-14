@@ -27,10 +27,10 @@ const slides: Slide[] = [
     alt: "Edificio comercial moderno con fachada de vidrio oscuro",
   },
   {
-    src: "https://images.unsplash.com/photo-1565008887125-cdcfa0e3f777?w=1200&q=85",
+    src: "https://images.unsplash.com/photo-1513828583688-c52646db42da?w=1200&q=85",
     category: "Obra industrial",
     title: "Naves industriales y plantas",
-    alt: "Interior de nave industrial con estructura metálica de gran altura",
+    alt: "Interior de nave industrial y espacio de manufactura",
   },
   {
     src: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200&q=85",
