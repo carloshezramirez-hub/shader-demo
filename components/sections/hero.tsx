@@ -1,17 +1,18 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { ChevronDown, Phone, Download } from "lucide-react"
 import { ShaderAnimation } from "@/components/ui/shader-lines"
 
-// Words kept short so they never overflow on any breakpoint
 const animatedWords = [
-  "infraestructura",
   "obra civil",
+  "infraestructura",
   "ingeniería",
   "urbanismo",
-  "construcción",
+  "edificación",
+  "proyectos",
+  "instalaciones",
 ]
 
 const metrics = [
@@ -22,11 +23,11 @@ const metrics = [
 ]
 
 export function Hero() {
-  const [wordIndex, setWordIndex] = useState(0)
+  const [activeWord, setActiveWord] = useState(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setWordIndex((i) => (i + 1) % animatedWords.length)
+      setActiveWord((i) => (i + 1) % animatedWords.length)
     }, 2800)
     return () => clearInterval(interval)
   }, [])
@@ -43,7 +44,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/45 to-black/90" />
 
       {/* Content */}
-      <div className="relative z-10 flex w-full max-w-4xl flex-col items-center gap-6 px-5 pt-20 pb-24 text-center sm:px-8 sm:gap-7">
+      <div className="relative z-10 flex w-full max-w-4xl flex-col items-center gap-5 px-5 pt-20 pb-24 text-center sm:px-8 sm:gap-6">
 
         {/* Corporate badge */}
         <div className="flex flex-col items-center gap-1">
@@ -56,45 +57,50 @@ export function Hero() {
           </span>
         </div>
 
-        {/* Headline with animated word */}
-        <div className="flex flex-col items-center gap-1 sm:gap-2">
-          <h1 className="text-[2.15rem] sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight text-white">
+        {/* Headline — 3-line structure, animated word never clips */}
+        <div className="flex w-full flex-col items-center gap-0">
+          <span className="text-[2rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-white">
             Expertos en
-          </h1>
+          </span>
 
           {/*
             Animated word container:
-            - min-h matches line height per breakpoint so layout never collapses
-            - NO overflow-hidden so words are never clipped
-            - word is absolute + centered with inset-x-0 text-center
-            - animation: blur fade (elegant, no y-slide = no overflow risk)
+            - min-h matches the tallest word at each breakpoint
+            - overflow-visible so nothing is clipped
+            - words are absolute + centered via inset-x-0 + text-center
+            - animation: blur + y-slide (word slides in from below, exits upward)
+            - AnimatePresence mode="wait" ensures only one word is active
           */}
           <div
-            className="relative w-full min-h-[2.75rem] sm:min-h-[3.75rem] md:min-h-[5.5rem] lg:min-h-[7rem]"
+            className="relative w-full overflow-visible"
+            style={{
+              minHeight: "clamp(2.6rem, 8vw, 5.2rem)",
+              margin: "0.15em 0",
+            }}
             aria-live="polite"
             aria-atomic="true"
           >
             <AnimatePresence mode="wait">
               <motion.span
-                key={wordIndex}
-                initial={{ opacity: 0, filter: "blur(10px)", scale: 0.97 }}
-                animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
-                exit={{ opacity: 0, filter: "blur(10px)", scale: 0.97 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="absolute inset-x-0 text-center text-[2.15rem] sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-[var(--accent-gold)] leading-none"
-                style={{ top: "50%", transform: "translateY(-50%)" }}
+                key={animatedWords[activeWord]}
+                initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
+                transition={{ duration: 0.45, ease: "easeOut" }}
+                className="absolute inset-x-0 text-center text-[2rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-[var(--accent-gold)]"
+                style={{ top: 0 }}
               >
-                {animatedWords[wordIndex]}
+                {animatedWords[activeWord]}
               </motion.span>
             </AnimatePresence>
           </div>
 
-          <h1 className="text-[2.15rem] sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight text-white">
-            de México
-          </h1>
+          <span className="text-[2rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-white">
+            en México
+          </span>
         </div>
 
-        {/* Subtitle — short on mobile, full on sm+ */}
+        {/* Subtitle */}
         <p className="max-w-lg text-sm sm:text-base leading-relaxed text-white/55 md:text-lg">
           <span className="sm:hidden">
             25 años de experiencia en construcción e infraestructura en México.
@@ -106,7 +112,7 @@ export function Hero() {
           </span>
         </p>
 
-        {/* CTA buttons — stack on mobile, row on sm+ */}
+        {/* CTA buttons */}
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:justify-center">
           <a
             href="#contacto"
@@ -134,7 +140,7 @@ export function Hero() {
           TEL-FAX (222) 2 40 06 07
         </a>
 
-        {/* Metrics strip — 2 cols on mobile, 4 on sm+ */}
+        {/* Metrics strip */}
         <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-px overflow-hidden rounded-2xl border border-white/8">
           {metrics.map(({ value, label }) => (
             <div

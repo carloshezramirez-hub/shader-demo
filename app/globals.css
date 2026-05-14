@@ -121,16 +121,19 @@
 }
 
 @layer base {
-  * {
+  *, *::before, *::after {
+    box-sizing: border-box;
     @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-    overflow-x: hidden;
   }
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+  body {
+    @apply bg-background text-foreground;
+    overflow-x: hidden;
+    min-width: 0;
   }
 }
 
