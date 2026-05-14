@@ -5,11 +5,12 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ChevronDown, Phone, Download } from "lucide-react"
 import { ShaderAnimation } from "@/components/ui/shader-lines"
 
+// Words kept short so they never overflow on any breakpoint
 const animatedWords = [
   "infraestructura",
   "obra civil",
   "ingeniería",
-  "proyectos",
+  "urbanismo",
   "construcción",
 ]
 
@@ -26,7 +27,7 @@ export function Hero() {
   useEffect(() => {
     const interval = setInterval(() => {
       setWordIndex((i) => (i + 1) % animatedWords.length)
-    }, 2600)
+    }, 2800)
     return () => clearInterval(interval)
   }, [])
 
@@ -55,29 +56,40 @@ export function Hero() {
           </span>
         </div>
 
-        {/* Headline with animated word — no overflow clip so words aren't cut */}
+        {/* Headline with animated word */}
         <div className="flex flex-col items-center gap-1 sm:gap-2">
-          <h1 className="text-[2.15rem] sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight text-white">
+          <h1 className="text-[2.15rem] sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight text-white">
             Expertos en
           </h1>
 
-          {/* Animated word: overflow-hidden clips y-slide; height matches font size per breakpoint */}
-          <div className="relative w-full flex justify-center overflow-hidden h-[2.8rem] sm:h-[4rem] md:h-[5.5rem] lg:h-[7rem]">
+          {/*
+            Animated word container:
+            - min-h matches line height per breakpoint so layout never collapses
+            - NO overflow-hidden so words are never clipped
+            - word is absolute + centered with inset-x-0 text-center
+            - animation: blur fade (elegant, no y-slide = no overflow risk)
+          */}
+          <div
+            className="relative w-full min-h-[2.75rem] sm:min-h-[3.75rem] md:min-h-[5.5rem] lg:min-h-[7rem]"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             <AnimatePresence mode="wait">
               <motion.span
                 key={wordIndex}
-                initial={{ y: "100%", opacity: 0 }}
-                animate={{ y: "0%", opacity: 1 }}
-                exit={{ y: "-100%", opacity: 0 }}
-                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute bottom-0 text-[2.15rem] sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-[var(--accent-gold)] leading-none pb-1"
+                initial={{ opacity: 0, filter: "blur(10px)", scale: 0.97 }}
+                animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+                exit={{ opacity: 0, filter: "blur(10px)", scale: 0.97 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="absolute inset-x-0 text-center text-[2.15rem] sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-[var(--accent-gold)] leading-none"
+                style={{ top: "50%", transform: "translateY(-50%)" }}
               >
                 {animatedWords[wordIndex]}
               </motion.span>
             </AnimatePresence>
           </div>
 
-          <h1 className="text-[2.15rem] sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight text-white mt-1">
+          <h1 className="text-[2.15rem] sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight text-white">
             de México
           </h1>
         </div>

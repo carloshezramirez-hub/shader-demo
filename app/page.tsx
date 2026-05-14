@@ -5,6 +5,7 @@ import { Services } from "@/components/sections/services"
 import { SpecialtiesBento } from "@/components/sections/specialties-bento"
 import { CapabilitiesRadar } from "@/components/sections/capabilities-radar"
 import { ProjectsRealized } from "@/components/sections/projects-realized"
+import { ProjectImageCarousel } from "@/components/sections/project-image-carousel"
 import { ProcessOrbital } from "@/components/sections/process-orbital"
 import { Contact } from "@/components/sections/contact"
 
@@ -18,6 +19,7 @@ export default function Home() {
         <SpecialtiesBento />
         <CapabilitiesRadar />
         <ProjectsRealized />
+        <ProjectImageCarousel />
         <ProcessOrbital />
         <Contact />
       </main>
