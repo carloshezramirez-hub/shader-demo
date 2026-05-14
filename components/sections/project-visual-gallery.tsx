@@ -18,8 +18,8 @@ const galleryItems: GalleryItem[] = [
     title: "Naves industriales",
     description: "Construcción y habilitación de plantas productivas y naves de gran escala.",
     category: "Industrial",
-    image: "https://images.unsplash.com/photo-1565008887125-cdcfa0e3f777?w=1200&q=85",
-    alt: "Interior de nave industrial con estructura metálica de gran altura",
+    image: "https://images.unsplash.com/photo-1513828583688-c52646db42da?w=1200&q=85",
+    alt: "Interior de nave industrial y espacio de manufactura",
     span: "md:col-span-1 md:row-span-1",
   },
   {
