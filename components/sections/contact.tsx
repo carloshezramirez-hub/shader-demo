@@ -33,21 +33,20 @@ const info = [
 
 export function Contact() {
   return (
-    <section id="contacto" className="py-28 px-6">
-      <div className="mx-auto max-w-7xl flex flex-col gap-16">
+    <section id="contacto" className="py-16 md:py-24 px-5 sm:px-6">
+      <div className="mx-auto max-w-7xl flex flex-col gap-10 md:gap-16">
         <SectionHeading
           badge="Contacto"
           title="Hablemos de tu proyecto"
           subtitle="Estamos en Puebla, Pue. Cuéntanos qué tienes en mente y nuestro equipo técnico te responderá a la brevedad."
         />
 
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
           {/* Info column */}
           <div className="flex flex-col gap-8">
-            <p className="text-base leading-relaxed text-white/55">
-              COCONSA — Constructores y Contadores Asociados S.A. de C.V. — con más de 25 años
-              de experiencia en obra civil, infraestructura e ingeniería. Contáctanos para
-              recibir una propuesta técnica sin costo.
+            <p className="text-sm sm:text-base leading-relaxed text-white/55">
+              <span className="sm:hidden">Contáctanos para recibir una propuesta técnica sin costo.</span>
+              <span className="hidden sm:inline">COCONSA — más de 25 años de experiencia en obra civil, infraestructura e ingeniería. Contáctanos para recibir una propuesta técnica sin costo.</span>
             </p>
 
             <ul className="flex flex-col gap-5">

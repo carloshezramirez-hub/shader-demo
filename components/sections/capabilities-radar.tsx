@@ -17,34 +17,66 @@ const nodes = [
 ]
 
 const highlights = [
-  { value: "9", label: "Capacidades integradas" },
-  { value: "9+", label: "Estados atendidos" },
-  { value: "25+", label: "Años de trayectoria" },
+  { value: "9", label: "Capacidades" },
+  { value: "9+", label: "Estados" },
+  { value: "25+", label: "Años" },
 ]
 
 export function CapabilitiesRadar() {
   return (
-    <section id="capacidades" className="py-28 px-6">
-      <div className="mx-auto max-w-7xl flex flex-col gap-16">
+    <section id="capacidades" className="py-16 md:py-24 px-5 sm:px-6">
+      <div className="mx-auto max-w-7xl flex flex-col gap-10 md:gap-16">
         <SectionHeading
           badge="Ecosistema de capacidades"
           title="Cobertura técnica integral"
-          subtitle="COCONSA integra nueve disciplinas técnicas en un solo proveedor, con trayectoria comprobada en Puebla, Tlaxcala, Oaxaca, Veracruz, Jalisco y más estados."
+          subtitle="COCONSA integra nueve disciplinas técnicas en un solo proveedor, con trayectoria en Puebla, Tlaxcala, Oaxaca, Veracruz, Jalisco y más."
         />
 
-        <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
+        {/* Mobile layout: compact pill grid + stats (no radar) */}
+        <div className="lg:hidden flex flex-col gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {nodes.map(({ label, icon: Icon }) => (
+              <div
+                key={label}
+                className="flex items-center gap-2.5 rounded-xl border border-white/6 bg-white/[0.03] px-3 py-3"
+              >
+                <Icon className="h-4 w-4 shrink-0 text-[var(--accent-gold)]" strokeWidth={1.5} />
+                <span className="text-xs text-white/65 leading-snug">{label}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Stats row */}
+          <div className="grid grid-cols-3 divide-x divide-white/10 rounded-2xl border border-white/8 bg-white/[0.03] py-5">
+            {highlights.map(({ value, label }) => (
+              <div key={label} className="flex flex-col items-center gap-0.5 px-3 text-center">
+                <span className="text-2xl font-bold text-[var(--accent-gold)]">{value}</span>
+                <span className="text-[10px] uppercase tracking-widest text-white/35 leading-tight">{label}</span>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-sm leading-relaxed text-white/50 text-center max-w-lg mx-auto">
+            Con trayectoria desde el año 2000, COCONSA ha desarrollado proyectos para
+            Volkswagen, FEMSA, Coca-Cola, Elektra, OXXO y entidades públicas como
+            IMSS y Secretaría de Obras Públicas de Tlaxcala.
+          </p>
+        </div>
+
+        {/* Desktop layout: radar + content side by side */}
+        <div className="hidden lg:flex items-center justify-between gap-16">
           {/* Radar */}
-          <div className="w-full max-w-md lg:max-w-none lg:w-[420px] shrink-0">
+          <div className="w-[420px] shrink-0">
             <RadarEffect nodes={nodes} />
           </div>
 
-          {/* Right side content */}
+          {/* Right side */}
           <div className="flex flex-col gap-8 flex-1 max-w-lg">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
               <p className="text-base leading-relaxed text-white/60">
                 Con una trayectoria sólida desde el año 2000, COCONSA ha desarrollado proyectos
                 para clientes del sector privado —Volkswagen, FEMSA, Coca-Cola, Elektra, OXXO—
-                y del sector público, como la Secretaría de Obras Públicas del Estado de Tlaxcala,
+                y del sector público, como la Secretaría de Obras Públicas de Tlaxcala,
                 el IMSS y múltiples ayuntamientos.
               </p>
               <p className="text-base leading-relaxed text-white/60">
@@ -74,6 +106,7 @@ export function CapabilitiesRadar() {
             </div>
           </div>
         </div>
+
       </div>
     </section>
   )

@@ -16,6 +16,44 @@ interface RadialOrbitalTimelineProps {
   className?: string
 }
 
+function MobileStep({ step, isLast }: { step: OrbitalStep; isLast: boolean }) {
+  const [open, setOpen] = useState(false)
+  const Icon = step.icon
+
+  return (
+    <div className="flex gap-4">
+      <div className="flex flex-col items-center gap-1 shrink-0">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--accent-gold)]/30 bg-[var(--accent-gold)]/10">
+          <span className="text-xs font-bold text-[var(--accent-gold)]">{step.number}</span>
+        </div>
+        {!isLast && <div className="flex-1 w-px bg-white/10 min-h-[20px]" />}
+      </div>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="flex flex-col gap-1 pb-4 text-left w-full"
+      >
+        <div className="flex items-center gap-2">
+          <Icon className="h-3.5 w-3.5 text-[var(--accent-gold)] shrink-0" strokeWidth={1.5} />
+          <h3 className="text-sm font-semibold text-white leading-snug">{step.title}</h3>
+        </div>
+        <div
+          className={cn(
+            "grid transition-all duration-300 ease-in-out",
+            open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+          )}
+        >
+          <div className="overflow-hidden">
+            <p className="text-xs leading-relaxed text-white/50 pt-1">{step.description}</p>
+          </div>
+        </div>
+        {!open && (
+          <p className="text-[10px] text-[var(--accent-gold)]/60 mt-0.5">Toca para ver detalle →</p>
+        )}
+      </button>
+    </div>
+  )
+}
+
 export function RadialOrbitalTimeline({ steps, className }: RadialOrbitalTimelineProps) {
   const [active, setActive] = useState(0)
 
@@ -37,6 +75,14 @@ export function RadialOrbitalTimeline({ steps, className }: RadialOrbitalTimelin
 
   return (
     <div className={cn("w-full", className)}>
+
+      {/* Mobile: expandable card stack */}
+      <div className="flex flex-col gap-0 md:hidden rounded-2xl border border-white/8 bg-white/[0.02] px-5 py-4">
+        {steps.map((step, i) => (
+          <MobileStep key={step.number} step={step} isLast={i === steps.length - 1} />
+        ))}
+      </div>
+
       {/* Desktop: orbital */}
       <div className="hidden md:flex flex-col items-center gap-10">
         <div className="relative" style={{ width: size, height: size }}>
@@ -45,16 +91,14 @@ export function RadialOrbitalTimeline({ steps, className }: RadialOrbitalTimelin
             <circle cx={cx} cy={cy} r={radius} fill="none" stroke="rgba(201,168,76,0.15)" strokeWidth="1" strokeDasharray="4 6" />
             {/* Inner ring */}
             <circle cx={cx} cy={cy} r={radius * 0.55} fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-            {/* Spokes to active */}
+            {/* Spokes */}
             {steps.map((_, i) => {
               const pos = getPos(i, steps.length, radius)
               return (
                 <line
                   key={i}
-                  x1={cx}
-                  y1={cy}
-                  x2={pos.x}
-                  y2={pos.y}
+                  x1={cx} y1={cy}
+                  x2={pos.x} y2={pos.y}
                   stroke={i === active ? "rgba(201,168,76,0.2)" : "rgba(255,255,255,0.04)"}
                   strokeWidth="1"
                   strokeDasharray="3 5"
@@ -78,7 +122,6 @@ export function RadialOrbitalTimeline({ steps, className }: RadialOrbitalTimelin
           {steps.map((step, i) => {
             const pos = getPos(i, steps.length, radius)
             const isActive = i === active
-            const Icon = step.icon
             return (
               <button
                 key={i}
@@ -86,13 +129,10 @@ export function RadialOrbitalTimeline({ steps, className }: RadialOrbitalTimelin
                 className={cn(
                   "absolute flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-300",
                   isActive
-                    ? "border-[var(--accent-gold)] bg-[var(--accent-gold)]/20 shadow-[0_0_20px_var(--accent-gold)/30]"
+                    ? "border-[var(--accent-gold)] bg-[var(--accent-gold)]/20 shadow-[0_0_20px_rgba(201,168,76,0.3)]"
                     : "border-white/15 bg-black/60 hover:border-[var(--accent-gold)]/50 hover:bg-[var(--accent-gold)]/10"
                 )}
-                style={{
-                  left: pos.x - 22,
-                  top: pos.y - 22,
-                }}
+                style={{ left: pos.x - 22, top: pos.y - 22 }}
                 title={step.title}
               >
                 <span className={cn("text-xs font-bold", isActive ? "text-[var(--accent-gold)]" : "text-white/50")}>
@@ -125,34 +165,6 @@ export function RadialOrbitalTimeline({ steps, className }: RadialOrbitalTimelin
         </div>
       </div>
 
-      {/* Mobile: vertical card stack */}
-      <div className="flex flex-col gap-4 md:hidden">
-        {steps.map((step) => {
-          const Icon = step.icon
-          return (
-            <div
-              key={step.number}
-              className="flex gap-4 rounded-2xl border border-white/8 bg-white/[0.03] p-5"
-            >
-              <div className="flex flex-col items-center gap-2 shrink-0">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--accent-gold)]/30 bg-[var(--accent-gold)]/10">
-                  <span className="text-sm font-bold text-[var(--accent-gold)]">{step.number}</span>
-                </div>
-                {step.number < steps.length && (
-                  <div className="flex-1 w-px bg-white/10 min-h-[24px]" />
-                )}
-              </div>
-              <div className="flex flex-col gap-1 pt-1.5">
-                <div className="flex items-center gap-2">
-                  <Icon className="h-4 w-4 text-[var(--accent-gold)]" strokeWidth={1.5} />
-                  <h3 className="text-sm font-semibold text-white">{step.title}</h3>
-                </div>
-                <p className="text-sm leading-relaxed text-white/50">{step.description}</p>
-              </div>
-            </div>
-          )
-        })}
-      </div>
     </div>
   )
 }

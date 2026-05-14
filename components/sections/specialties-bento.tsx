@@ -21,16 +21,16 @@ const specialties: SpecialtyItem[] = [
     title: "Construcción de obras civiles",
     description:
       "Desde cimentaciones y estructuras de concreto armado hasta acabados finales. Ejecutado en Puebla, Tlaxcala, Veracruz, Oaxaca y más.",
-    tags: ["Concreto armado", "Cimentación", "Estructura", "Acabados"],
+    tags: ["Concreto armado", "Cimentación", "Acabados"],
     colSpan: 2,
   },
   {
     icon: FileText,
     category: "Proyectos ejecutivos",
-    title: "Proyectos ejecutivos y estructurales",
+    title: "Proyectos ejecutivos",
     description:
-      "Elaboración de proyectos arquitectónicos, estructurales y de instalaciones para licitaciones públicas y privadas.",
-    tags: ["Planos estructurales", "Memoria de cálculo", "Licitación"],
+      "Proyectos arquitectónicos, estructurales y de instalaciones para licitaciones públicas y privadas.",
+    tags: ["Planos", "Licitación"],
     colSpan: 1,
   },
   {
@@ -38,26 +38,26 @@ const specialties: SpecialtyItem[] = [
     category: "Infraestructura",
     title: "Vialidades y carreteras",
     description:
-      "Infraestructura vial y pavimentación para gobiernos estatales. Puentes peatonales, terracerías y carpeta asfáltica.",
-    tags: ["Pavimentación", "Puentes", "Terraplenes", "Carpeta asfáltica"],
+      "Infraestructura vial y pavimentación para gobiernos estatales. Puentes peatonales y carpeta asfáltica.",
+    tags: ["Pavimentación", "Puentes"],
     colSpan: 1,
   },
   {
     icon: Droplets,
     category: "Ingeniería",
-    title: "Ingeniería hidráulica y sanitaria",
+    title: "Ingeniería hidráulica",
     description:
-      "Plantas de tratamiento, redes hidráulicas y sistemas sanitarios para proyectos industriales, hospitalarios y urbanos.",
-    tags: ["Hidráulica", "Sanitaria", "Plantas de tratamiento"],
+      "Plantas de tratamiento, redes hidráulicas y sistemas sanitarios industriales y urbanos.",
+    tags: ["Hidráulica", "Sanitaria"],
     colSpan: 1,
   },
   {
     icon: Zap,
     category: "Instalaciones",
-    title: "Instalaciones eléctricas y electromecánicas",
+    title: "Instalaciones electromecánicas",
     description:
-      "Alta y media tensión, subestaciones eléctricas, transformadores pedestal y sistemas electromecánicos para OXXO, Coca-Cola y más.",
-    tags: ["Alta tensión", "Media tensión", "Transformadores", "OXXO", "FEMSA"],
+      "Alta y media tensión, transformadores pedestal para OXXO, Coca-Cola, FEMSA y más.",
+    tags: ["Alta tensión", "OXXO", "FEMSA"],
     colSpan: 1,
   },
   {
@@ -65,17 +65,17 @@ const specialties: SpecialtyItem[] = [
     category: "Comercial · Hospitalario",
     title: "Edificaciones comerciales y de salud",
     description:
-      "Construcción y remodelación de tiendas Elektra, Banco Azteca, Farmacias Guadalajara. Participación en Hospital Puebla (13 niveles) y Hospital General Zona Norte.",
-    tags: ["Elektra", "Banco Azteca", "STAR Médica", "IMSS", "Farmacias"],
+      "Elektra, Banco Azteca, Farmacias Guadalajara. Hospital Puebla (13 niveles) y Hospital General Zona Norte.",
+    tags: ["Elektra", "STAR Médica", "IMSS"],
     colSpan: 2,
   },
   {
     icon: GraduationCap,
     category: "Educativo · Deportivo",
-    title: "Espacios educativos y deportivos",
+    title: "Espacios educativos",
     description:
-      "Canchas, aulas, cubiertas de plazas cívicas y rehabilitación de planteles bajo el programa Escuelas Dignas y CAPCEE.",
-    tags: ["Escuelas Dignas", "CAPCEE", "Canchas", "Aulas"],
+      "Canchas, aulas y cubiertas bajo el programa Escuelas Dignas y CAPCEE.",
+    tags: ["CAPCEE", "Escuelas Dignas"],
     colSpan: 1,
   },
   {
@@ -83,37 +83,38 @@ const specialties: SpecialtyItem[] = [
     category: "Urbanismo",
     title: "Urbanismo y pavimentación",
     description:
-      "Centros de desarrollo comunitario, comandancias de policía, obra pública para ayuntamientos de Puebla y Tlaxcala.",
-    tags: ["Obra pública", "Desarrollo comunitario", "Pavimentación"],
+      "Centros comunitarios, comandancias y obra pública para ayuntamientos de Puebla y Tlaxcala.",
+    tags: ["Obra pública", "Desarrollo comunitario"],
     colSpan: 1,
   },
 ]
 
 export function SpecialtiesBento() {
   return (
-    <section id="especialidades" className="py-28 px-6 bg-white/[0.015]">
-      <div className="mx-auto max-w-7xl flex flex-col gap-16">
+    /* Hidden on mobile — Services section covers mobile. Desktop gets the detailed bento. */
+    <section id="especialidades" className="hidden md:block py-20 lg:py-24 px-6 bg-white/[0.015]">
+      <div className="mx-auto max-w-7xl flex flex-col gap-12 lg:gap-16">
         <SectionHeading
           badge="Especialidades técnicas"
           title="Lo que COCONSA construye"
-          subtitle="Ocho disciplinas técnicas consolidadas en más de dos décadas de proyectos industriales, comerciales, hospitalarios, educativos e institucionales."
+          subtitle="Ocho disciplinas técnicas consolidadas en más de dos décadas de proyectos industriales, comerciales, hospitalarios e institucionales."
         />
         <BentoGrid>
           {specialties.map((item) => {
             const Icon = item.icon
             return (
               <BentoItem key={item.title} colSpan={item.colSpan}>
-                <div className="flex h-full flex-col gap-4">
+                <div className="flex h-full flex-col gap-3">
                   <div className="flex items-start justify-between gap-3">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-gold)]/10 ring-1 ring-[var(--accent-gold)]/20">
-                      <Icon className="h-5 w-5 text-[var(--accent-gold)]" strokeWidth={1.5} />
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-gold)]/10 ring-1 ring-[var(--accent-gold)]/20">
+                      <Icon className="h-4 w-4 text-[var(--accent-gold)]" strokeWidth={1.5} />
                     </div>
-                    <span className="rounded-full border border-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-white/30">
+                    <span className="rounded-full border border-white/10 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-widest text-white/30">
                       {item.category}
                     </span>
                   </div>
-                  <div className="flex flex-col gap-2 flex-1">
-                    <h3 className="text-base font-semibold leading-snug text-white">{item.title}</h3>
+                  <div className="flex flex-col gap-1.5 flex-1">
+                    <h3 className="text-sm font-semibold leading-snug text-white">{item.title}</h3>
                     <p className="text-sm leading-relaxed text-white/50 flex-1">{item.description}</p>
                   </div>
                   <div className="flex flex-wrap gap-1.5 mt-auto pt-2">

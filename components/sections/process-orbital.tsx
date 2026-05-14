@@ -58,8 +58,8 @@ const steps = [
 
 export function ProcessOrbital() {
   return (
-    <section id="proceso" className="py-28 px-6 bg-white/[0.015]">
-      <div className="mx-auto max-w-5xl flex flex-col gap-16">
+    <section id="proceso" className="py-16 md:py-24 px-5 sm:px-6 bg-white/[0.015]">
+      <div className="mx-auto max-w-5xl flex flex-col gap-10 md:gap-16">
         <SectionHeading
           badge="Proceso de trabajo"
           title="De la consulta a la entrega"
